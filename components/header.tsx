@@ -1,9 +1,9 @@
+import { Loader2 } from "lucide-react"
 import { UserButton } from "@clerk/nextjs"
 import { HeaderLogo } from "./header-logo"
 import { Navigation } from "./navigation"
 import { WelcomeMsg } from "./welcome-msg"
 import { ClerkLoading, ClerkLoaded } from "@clerk/nextjs"
-import { Loader2 } from "lucide-react"
 
 export const Header = () => {
   return (
