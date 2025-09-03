@@ -45,7 +45,7 @@ export const AccountForm = ({
   });
 
   const handleSubmit = (values: FormValues) => {
-    console.log({ values });
+    onSubmit(values);
   };
 
   const handleDelete = () => {
@@ -77,10 +77,16 @@ export const AccountForm = ({
         <Button className="w-full" type="submit" disabled={disabled}>
           {id ? "Save changes" : "Create account"}
         </Button>
-        <Button className="w-full" variant="outline" type="button" onClick={handleDelete} disabled={disabled}>
+        {id && <Button
+          className="w-full"
+          variant="outline"
+          type="button"
+          onClick={handleDelete}
+          disabled={disabled}
+        >
           <Trash className="size-4" />
           Delete account
-        </Button>
+        </Button>}
       </form>
     </Form>
   )
