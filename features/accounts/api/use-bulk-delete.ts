@@ -4,10 +4,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { client } from "@/lib/hono";
 
-type RequestType = InferRequestType<typeof client.api.accounts.$post>["json"];
-type ResponseType = InferResponseType<typeof client.api.accounts.$post>;
+type RequestType = InferRequestType<typeof client.api.accounts["bulk-delete"]["$post"]>["json"];
+type ResponseType = InferResponseType<typeof client.api.accounts["bulk-delete"]["$post"]>;
 
-export const useCreateAccount = () => {
+export const useBulkDeleteAccount = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<
@@ -16,17 +16,18 @@ export const useCreateAccount = () => {
     RequestType
   >({
     mutationFn: async (json) => {
-      const response = await client.api.accounts.$post({ json });
+      const response = await client.api.accounts["bulk-delete"]["$post"]({ json });
       return await response.json()
     },
     onSuccess: () => {
-      toast.success("Account created");
+      toast.success("Accounts deleted");
       // invalidate 作废，让 key 是 accounts 的请求结果作废，因为我们已经更新 account。
       // queryKey "accounts" 的来源是 use-get-accounts.ts 中的 queryKey
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
+      // TODO: Also invalidate summary
     },
     onError: () => {
-      toast.error("Failed to create account")
+      toast.error("Failed to delete accounts")
     }
   });
 
