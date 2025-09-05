@@ -198,21 +198,18 @@ const app = new Hono()
         return c.json({ error: "Missing id" }, 400);
       }
 
-      const transactionsToUpdate = db.$with("transaction_to_update").as(
-        db.select({ id: transactions.id })
-          .from(transactions)
-          .innerJoin(accounts, eq(transactions.accountId, accounts.id))
-          .where(and(
-            eq(transactions.id, id),
-            eq(accounts.userId, auth.userId)
-          ))
-      );
-
       const [data] = await db
-        .with(transactionsToUpdate)
         .update(transactions)
         .set(values)
-        .where(inArray(transactions.id, sql`(select id from ${transactionsToUpdate})`))
+        .where(and(
+          eq(transactions.id, id),
+          inArray(
+            transactions.accountId,
+            db.select({ id: accounts.id })
+              .from(accounts)
+              .where(eq(accounts.userId, auth.userId))
+          )
+        ))
         .returning()
         
       if (!data) {
@@ -238,22 +235,17 @@ const app = new Hono()
         return c.json({ error: "Missing id" }, 400);
       }
 
-      const transactionsToDelete = db.$with("transaction_to_delete").as(
-        db.select({ id: transactions.id })
-          .from(transactions)
-          .innerJoin(accounts, eq(transactions.accountId, accounts.id))
-          .where(and(
-            eq(transactions.id, id),
-            eq(accounts.userId, auth.userId)
-          ))
-      );
-
       const [data] = await db
-        .with(transactionsToDelete)
         .delete(transactions)
-        .where(
-          inArray(transactions.id, sql`(selete id from ${transactionsToDelete})`)
-        )
+        .where(and(
+          inArray(
+            transactions.id,
+            db.select({ id: accounts.id })
+              .from(accounts)
+              .where(eq(accounts.userId, auth.userId))
+          ),
+          eq(transactions.id, id)
+        ))
         .returning({
           id: transactions.id
         })
