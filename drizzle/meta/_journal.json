@@ -15,6 +15,13 @@
       "when": 1730991756220,
       "tag": "0001_loving_carlie_cooper",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757056082460,
+      "tag": "0002_lazy_naoko",
+      "breakpoints": true
     }
   ]
 }
