@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { insertAccountSchema } from "@/db/schema";
+import { insertTransactionSchema } from "@/db/schema";
 import {
   Form,
   FormControl,
@@ -17,26 +17,43 @@ import {
 
 // 定义表单的 schema
 // 这里的 schema 是 ZodObject 对象的一个实例，而非类型
-const formSchema = insertAccountSchema.pick({ name: true });
+const formSchema = z.object({
+  date: z.coerce.date(),
+  accountId: z.string(),
+  categorId: z.string().nullable().optional(),
+  payee: z.string(),
+  amount: z.string(),
+  notes: z.string().nullable().optional(),
+});
+const apiSchema = insertTransactionSchema.omit({ id: true });
 
 // 定义表单的值类型
 type FormValues = z.input<typeof formSchema>;
+type ApiFormValue = z.input<typeof apiSchema>;
 
 // 定义组件的 props 类型
 type Props = {
   id?: string;
   defaultValue?: FormValues;
-  onSubmit: (values: FormValues) => void;
+  onSubmit: (values: ApiFormValue) => void;
   onDelete?: () => void;
   disabled?: boolean;
+  categoryOptions: { label: string; value: string }[];
+  onCreateCategory: (name: string) => void;
+  accountOptions: { label: string; value: string }[];
+  onCreateAccount: (name: string) => void;
 }
 
-export const AccountForm = ({
+export const TransactionForm = ({
   id,
   defaultValue,
   onSubmit,
   onDelete,
   disabled,
+  categoryOptions,
+  onCreateCategory,
+  accountOptions,
+  onCreateAccount,
 }: Props) => {
   // form 实例
   const form = useForm<FormValues>({
