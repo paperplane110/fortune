@@ -11,6 +11,7 @@ export const useGetTransactions = () => {
 
     return useQuery({
         // TODO: check if params are needed in the queryKey
+        // in use-edit-transaction, we invalidate the query only by the keyword "transactions"
         queryKey: ["transactions", { from, to, accountId }],
         queryFn: async () => {
             const response = await client.api.transactions.$get({

@@ -4,9 +4,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { client } from "@/lib/hono";
 
-type ResponseType = InferResponseType<typeof client.api.accounts[":id"]["$delete"]>;
+type ResponseType = InferResponseType<typeof client.api.transactions[":id"]["$delete"]>;
 
-export const useDeleteAccount = (id?: string) => {
+export const useDeleteTransaction = (id?: string) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<
@@ -14,24 +14,24 @@ export const useDeleteAccount = (id?: string) => {
     Error
   >({
     mutationFn: async () => {
-      const response = await client.api.accounts[":id"].$delete({
+      const response = await client.api.transactions[":id"].$delete({
         param: { id }
       });
       return await response.json()
     },
     onSuccess: async () => {
-      toast.success("Account deleted");
+      toast.success("Transaction deleted");
       // 这里和教程不同，使用 react-query 中推荐的用法
       await Promise.all([
         // 这里和教程不同，由于教程中没有使用 Promise 阻塞，所以 onSuccess 能立即返回
         // 其实在 InvalidQueries 之后会触发后台多次 retry 404，阻塞 onSuccess 返回
         // 所以改用 removeQueries，不再触发 query retry
-        queryClient.removeQueries({ queryKey: ["account", { id }]}),
-        queryClient.invalidateQueries({ queryKey: ["accounts"]})
+        queryClient.removeQueries({ queryKey: ["transaction", { id }]}),
+        queryClient.invalidateQueries({ queryKey: ["transactions"]})
       ])
     },
     onError: () => {
-      toast.error("Failed to delete account");
+      toast.error("Failed to delete transaction");
     }
   });
 
