@@ -16,7 +16,6 @@ import {
   CardContent,
 } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton";
-import { accounts } from "@/db/schema";
 
 const TransactionsPage = () => {
   const newTransaction = useNewTransaction();
@@ -62,10 +61,10 @@ const TransactionsPage = () => {
           <DataTable
             filterKey="name"
             columns={columns}
-            data={accounts}
+            data={transactions}
             onDelete={(rows) => {
               const ids = rows.map((row) => row.original.id);
-              bulkDeleteAccount.mutate({ ids });
+              bulkDeleteTransaction.mutate({ ids });
             }}
             disabled={isDisabled}
           />
