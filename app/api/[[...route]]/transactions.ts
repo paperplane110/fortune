@@ -266,7 +266,7 @@ const app = new Hono()
         .delete(transactions)
         .where(and(
           inArray(
-            transactions.id,
+            transactions.accountId,
             db.select({ id: accounts.id })
               .from(accounts)
               .where(eq(accounts.userId, auth.userId))

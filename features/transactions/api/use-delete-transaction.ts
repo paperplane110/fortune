@@ -17,6 +17,10 @@ export const useDeleteTransaction = (id?: string) => {
       const response = await client.api.transactions[":id"].$delete({
         param: { id }
       });
+      // 这里和教程不同，教程中没有判断 response.ok，将导致 onError 不生效
+      if (!response.ok) {
+        throw new Error("Failed to delete transaction");
+      }
       return await response.json()
     },
     onSuccess: async () => {
