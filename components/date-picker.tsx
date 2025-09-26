@@ -1,8 +1,6 @@
 import * as React from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-// 这里和教程不同，因为 react-day-picker 版本更新了
-import { OnSelectHandler } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -15,7 +13,7 @@ import {
 
 type Props = {
   value?: Date;
-  onChange?: OnSelectHandler<Date | undefined>;
+  onChange?: (date: Date | undefined) => void;
   disabled?: boolean;
 }
 
@@ -24,8 +22,15 @@ export const DatePicker = ({
   onChange,
   disabled,
 }: Props) => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleSelect = (date: Date | undefined) => {
+    onChange?.(date);
+    setOpen(false); // 选择日期后关闭 popover
+  };
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           disabled={disabled}
@@ -43,7 +48,7 @@ export const DatePicker = ({
         <Calendar 
           mode="single"
           selected={value}
-          onSelect={onChange}
+          onSelect={handleSelect}
           autoFocus
         />
       </PopoverContent>
