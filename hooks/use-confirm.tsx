@@ -38,7 +38,9 @@ export const useConfirm = (
   }
 
   const ConfirmationDialog = () => (
-    <Dialog open={promise !== null}>
+    // 这里和教程不同，是为了解决 model 点击周围黑色区域以及右上角 x 不退出的情况
+    // 教程中 dialog 的显示只依赖 promise，导致了 bug
+    <Dialog open={promise !== null} onOpenChange={handleCancel}>
       <DialogContent className="bg-white">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
