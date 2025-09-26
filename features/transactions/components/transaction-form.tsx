@@ -45,7 +45,7 @@ type ApiFormValue = z.input<typeof apiSchema>;
 // 定义组件的 props 类型
 type Props = {
   id?: string;
-  defaultValue?: FormValues;
+  defaultValues?: FormValues;
   onSubmit: (values: ApiFormValue) => void;
   onDelete?: () => void;
   disabled?: boolean;
@@ -57,7 +57,7 @@ type Props = {
 
 export const TransactionForm = ({
   id,
-  defaultValue,
+  defaultValues: defaultValue,
   onSubmit,
   onDelete,
   disabled,

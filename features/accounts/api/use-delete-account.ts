@@ -27,7 +27,8 @@ export const useDeleteAccount = (id?: string) => {
         // 其实在 InvalidQueries 之后会触发后台多次 retry 404，阻塞 onSuccess 返回
         // 所以改用 removeQueries，不再触发 query retry
         queryClient.removeQueries({ queryKey: ["account", { id }]}),
-        queryClient.invalidateQueries({ queryKey: ["accounts"]})
+        queryClient.invalidateQueries({ queryKey: ["accounts"]}),
+        queryClient.invalidateQueries({ queryKey: ["transactions"] }),
       ])
     },
     onError: () => {

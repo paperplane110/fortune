@@ -26,7 +26,8 @@ export const useEditCategory = (id?: string) => {
       toast.success("Category updated");
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ["category", { id }]}),
-        queryClient.invalidateQueries({ queryKey: ["categories"]})
+        queryClient.invalidateQueries({ queryKey: ["categories"]}),
+        queryClient.invalidateQueries({ queryKey: ["transactions"]})
       ])
     },
     onError: () => {

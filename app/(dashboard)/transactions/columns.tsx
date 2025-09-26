@@ -11,8 +11,11 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Badge } from "@/components/ui/badge";
+
 import { Actions } from "./actions"
 import { AccoutColumn } from "./account-column"
+import { CategoryColumn } from "./category-column";
 
 export type ResponseType = InferResponseType<typeof client.api.transactions.$get, 200>["data"][0];
 
@@ -76,9 +79,11 @@ export const columns: ColumnDef<ResponseType>[] = [
     },
     cell: ({ row }) => {
       return (
-        <span>
-          {row.original.category}
-        </span>
+        <CategoryColumn
+          id={row.original.id}
+          category={row.original.category}
+          categoryId={row.original.categoryId}
+        />
       )
     }
   },
@@ -112,14 +117,12 @@ export const columns: ColumnDef<ResponseType>[] = [
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"));
       return (
-        <span
-          className={cn(
-            "text-xs font-medium",
-            amount > 0 ? "text-green-600" : "text-red-600"
-          )}
+        <Badge
+          className={cn("text-xs font-medium")}
+          variant={amount > 0 ? "green" : "red"}
         >
           {formatCurrency(amount)}
-        </span>
+        </Badge>
       )
     }
   },
