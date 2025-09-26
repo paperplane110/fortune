@@ -1,23 +1,50 @@
 "use client"
-
+import { useState } from "react";
 import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
 import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
 import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transactions";
 
-import { DataTable } from "@/components/data-table";
-import { columns } from "./columns";
-
 import { Loader2, Plus } from "lucide-react";
+import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardContent,
 } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton";
+
+import { columns } from "./columns";
+import { UploadButton } from "./upload-button";
+import { ImportCard } from "./import-card";
+
+enum VARIANT {
+  LIST = "LIST",
+  IMPORT = "IMPORT"
+}
+
+const INITIAL_IMPORT_RESULT = {
+  data: [],
+  errors: [],
+  meta: {},
+}
 
 const TransactionsPage = () => {
+  const [variant, setVariant] = useState<VARIANT>(VARIANT.LIST);
+  const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULT);
+
+  const onUpload = (results: typeof INITIAL_IMPORT_RESULT) => {
+    console.log(results)
+    setImportResults(results);
+    setVariant(VARIANT.IMPORT);
+  };
+
+  const onCancelImport = () => {
+    setImportResults(INITIAL_IMPORT_RESULT);
+    setVariant(VARIANT.LIST);
+  };
+
   const newTransaction = useNewTransaction();
   const bulkDeleteTransaction = useBulkDeleteTransactions();
   const transactionsQuery = useGetTransactions();
@@ -42,6 +69,16 @@ const TransactionsPage = () => {
     )
   }
 
+  if (variant === VARIANT.IMPORT) {
+    return (
+      <ImportCard 
+        data={importResults.data}
+        onCancel={onCancelImport}
+        onSubmit={() => {}}
+      />
+    )
+  }
+
   return (
     <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
       <Card className="border-none drop-shadow-sm">
@@ -49,13 +86,18 @@ const TransactionsPage = () => {
           <CardTitle className="text-xl line-clamp-1">
             Transaction History
           </CardTitle>
-          <Button
-            size="sm"
-            onClick={newTransaction.onOpen}
-          >
-            <Plus className="size-4 mr-2" />
-            Add new
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              onClick={newTransaction.onOpen}
+            >
+              <Plus className="size-4 mr-2" />
+              Add new
+            </Button>
+            <UploadButton 
+              onUpload={onUpload}
+            />
+          </div>
         </CardHeader>
         <CardContent>
           <DataTable

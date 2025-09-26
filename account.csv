@@ -1,0 +1,3 @@
+Type,Product,Start Date,Completed Date,Description,Amount,Fee,Currency,State,Balance
+CARD_PAYMENT,Mastercard,2025-08-01 12:00:00,2023-08-01 12:00:01,Test Payment,-100.00,0.00,USD,COMPLETED,1000.00
+TOPUP,Mastercard,2025-09-01 13:00:00,2023-09-01 13:00:01,Top Up,100.00,0.00,USD,COMPLETED,1100.00
