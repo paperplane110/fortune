@@ -17,6 +17,11 @@ export const useBulkDeleteAccounts = () => {
   >({
     mutationFn: async (json) => {
       const response = await client.api.accounts["bulk-delete"]["$post"]({ json });
+      
+      if (!response.ok) {
+        throw new Error("Failed to bulk delete accounts.");
+      }
+      
       return await response.json()
     },
     onSuccess: () => {

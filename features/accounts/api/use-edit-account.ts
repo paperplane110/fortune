@@ -20,6 +20,11 @@ export const useEditAccount = (id?: string) => {
         json,
         param: { id }
       });
+      
+      if (!response.ok) {
+        throw new Error("Failed to update account.");
+      }
+      
       return await response.json()
     },
     onSuccess: async () => {

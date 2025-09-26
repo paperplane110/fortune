@@ -17,6 +17,11 @@ export const useDeleteAccount = (id?: string) => {
       const response = await client.api.accounts[":id"].$delete({
         param: { id }
       });
+      
+      if (!response.ok) {
+        throw new Error("Failed to delete account.");
+      }
+      
       return await response.json()
     },
     onSuccess: async () => {

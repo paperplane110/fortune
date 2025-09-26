@@ -17,6 +17,11 @@ export const useBulkDeleteTransactions = () => {
   >({
     mutationFn: async (json) => {
       const response = await client.api.transactions["bulk-delete"]["$post"]({ json });
+      
+      if (!response.ok) {
+        throw new Error("Failed to bulk delete transactions.");
+      }
+      
       return await response.json()
     },
     onSuccess: () => {

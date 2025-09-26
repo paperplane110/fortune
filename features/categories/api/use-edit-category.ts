@@ -20,6 +20,11 @@ export const useEditCategory = (id?: string) => {
         json,
         param: { id }
       });
+      
+      if (!response.ok) {
+        throw new Error("Failed to update category.");
+      }
+      
       return await response.json()
     },
     onSuccess: async () => {

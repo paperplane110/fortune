@@ -20,6 +20,11 @@ export const useEditTransaction = (id?: string) => {
         json,
         param: { id }
       });
+      
+      if (!response.ok) {
+        throw new Error("Failed to update transaction.");
+      }
+      
       return await response.json()
     },
     onSuccess: async () => {

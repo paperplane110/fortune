@@ -17,6 +17,11 @@ export const useBulkCreateTransactions = () => {
   >({
     mutationFn: async (json) => {
       const response = await client.api.transactions["bulk-create"]["$post"]({ json });
+      
+      if (!response.ok) {
+        throw new Error("Failed to bulk create transactions.");
+      }
+      
       return await response.json()
     },
     onSuccess: () => {

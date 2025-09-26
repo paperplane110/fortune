@@ -17,6 +17,11 @@ export const useDeleteCategory = (id?: string) => {
       const response = await client.api.categories[":id"].$delete({
         param: { id }
       });
+      
+      if (!response.ok) {
+        throw new Error("Failed to delete category.");
+      }
+      
       return await response.json()
     },
     onSuccess: async () => {
