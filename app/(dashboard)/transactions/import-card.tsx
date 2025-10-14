@@ -116,7 +116,7 @@ export const ImportCard = ({
       date: format(parse(item.date, dateFormat, new Date()), outputFormat)
     }));
 
-    onSubmit(formattedData)
+    onSubmit(formattedData);
   }
 
     return(
