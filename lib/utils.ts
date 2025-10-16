@@ -58,7 +58,7 @@ export function fillEmptyDays(
   activeDays: {
     date: Date,
     income: number,
-    expense: number,
+    expenses: number,
   }[],
   startDate: Date,
   endDate: Date,
@@ -80,7 +80,7 @@ export function fillEmptyDays(
       return {
         date: day,
         income: 0,
-        expense: 0,
+        expenses: 0,
       };
     }
   });

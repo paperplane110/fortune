@@ -160,10 +160,10 @@ const app = new Hono()
               ELSE 0
             END
             )`.mapWith(Number),
-          expense: sql`SUM(
+          expenses: sql`SUM(
             CASE 
               WHEN ${transactions.amount} < 0 
-              THEN ${transactions.amount}
+              THEN ABS(${transactions.amount})
               ELSE 0
             END
             )`.mapWith(Number)
