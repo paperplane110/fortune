@@ -4,7 +4,7 @@ import { z } from "zod"
 import { zValidator } from "@hono/zod-validator";
 import { subDays, parse, differenceInDays } from "date-fns";
 import { db } from "@/db/drizzle";
-import { and, eq, gte, lte, lt, sql, sum, desc } from "drizzle-orm";
+import { and, eq, gte, lte, lt, sql, desc } from "drizzle-orm";
 import { accounts, categories, transactions } from "@/db/schema";
 import { calculatePercentageChange, fillEmptyDays } from "@/lib/utils";
 
@@ -119,7 +119,7 @@ const app = new Hono()
         .innerJoin(
           categories,
           eq(
-            transactions.categoryId,  // TODO 这里不是 leftjoin，为了应对 category 为 undefined 的情况
+            transactions.categoryId,  // NOTE 这里不是 leftjoin，为了应对 category 为 undefined 的情况
             categories.id
           )
         )
@@ -187,7 +187,7 @@ const app = new Hono()
         .groupBy(transactions.date)
         .orderBy(transactions.date)
 
-      // TODO why doing this in backend? will add payload.
+      // NOTE why doing this in backend? will add payload.
       const days = fillEmptyDays(
         activeDays,
         startDate,
@@ -200,7 +200,7 @@ const app = new Hono()
           remainingChange,
           incomeAmount: currentPeriod.income,
           incomeChange,
-          expenseAmount: currentPeriod.expenses,
+          expensesAmount: currentPeriod.expenses,
           expensesChange,
           categories: finalCategories,
           days,
