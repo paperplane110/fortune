@@ -8,14 +8,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 90, fill: "var(--color-other)" },
-]
-
 const COLORS = ["#ffba00", "#ff6900", "#e17100", "oklch(47.3% 0.137 46.201)",]
 
 type Props = {
@@ -33,7 +25,7 @@ export const RadialVairiant = ({ data = [] }: Props) => {
       fill: COLORS[index % COLORS.length],
     }
   }, [])
-  const chartConfig = chartData.reduce((acc, item, index) => {
+  const chartConfig = chartData.reduce((acc, item) => {
     acc[item.name] = {
       label: item.name,
       color: item.fill,
