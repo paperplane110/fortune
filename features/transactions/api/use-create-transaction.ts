@@ -29,7 +29,7 @@ export const useCreateTransaction = () => {
       // invalidate 作废，让 key 是 transactions 的请求结果作废，因为我们已经更新 transaction。
       // queryKey "transactions" 的来源是 use-get-transactions.ts 中的 queryKey
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
-      // TODO: invalidate summary
+      queryClient.invalidateQueries({ queryKey: ["summary"] });
     },
     onError: () => {
       toast.error("Failed to create transaction")

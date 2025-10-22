@@ -31,7 +31,7 @@ export const Select = ({
     onChange(option?.value)
   }
 
-  // TODO: don't understand 
+  // NOTE: don't understand 
   const formattedValue = useMemo(() => {
     return options.find((option) => option.value === value)
   }, [options, value])

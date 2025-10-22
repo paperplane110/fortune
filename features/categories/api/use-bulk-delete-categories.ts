@@ -29,7 +29,7 @@ export const useBulkDeleteCategories = () => {
       // invalidate 作废，让 key 是 categories 的请求结果作废，因为我们已经更新 category
       // queryKey "categories" 的来源是 use-get-categories.ts 中的 queryKey
       queryClient.invalidateQueries({ queryKey: ["categories"] });
-      // TODO: Also invalidate summary
+      queryClient.invalidateQueries({ queryKey: ["summary"] });
     },
     onError: () => {
       toast.error("Failed to delete categories")

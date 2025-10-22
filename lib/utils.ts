@@ -103,5 +103,5 @@ export function formatDateRange(period: Period) {
   if (period.to) {
     return `${format(period.from, "LLL dd")} - ${format(period.to, "LLL dd, y")}`;
   }
-  return format(period.from, "LLL dd, y");  // TODO I don't understand here's logic
+  return format(period.from, "LLL dd, y");  // NOTE I don't understand here's logic
 }

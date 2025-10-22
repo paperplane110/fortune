@@ -29,7 +29,7 @@ export const useBulkDeleteAccounts = () => {
       // invalidate 作废，让 key 是 accounts 的请求结果作废，因为我们已经更新 account。
       // queryKey "accounts" 的来源是 use-get-accounts.ts 中的 queryKey
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
-      // TODO: Also invalidate summary
+      queryClient.invalidateQueries({ queryKey: ["summary"] });
     },
     onError: () => {
       toast.error("Failed to delete accounts")

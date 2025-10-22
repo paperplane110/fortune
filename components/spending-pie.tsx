@@ -31,7 +31,7 @@ export const SpendingPie = ({ data = [] }: Props) => {
   const [chartType, setChartType] = useState("pie");
 
   const onTypeChange = (type: string) => {
-    // TODO add paywall
+    // ?TODO add paywall
     setChartType(type);
   }
 

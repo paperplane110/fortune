@@ -25,7 +25,7 @@ const boxVariant = cva(
         default: "bg-yellow-500/20",
         success: "bg-emerald-500/20",
         danger: "bg-rose-500/20",
-        warning: "bg-yellow-500/20",  // TODO need change color
+        warning: "bg-yellow-500/20",
       }
     },
     defaultVariants: {
@@ -42,7 +42,7 @@ const iconVariant = cva(
         default: "fill-orange-500",
         success: "fill-emerald-500",
         danger: "fill-rose-500",
-        warning: "fill-yellow-500", // TODO need change color
+        warning: "fill-yellow-500",
       }
     },
     defaultVariants: {

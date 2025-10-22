@@ -26,10 +26,11 @@ export const useSelectAccount = (): [() => JSX.Element, () => Promise<unknown>] 
     value: account.id,
   }));
 
-  const [promise, setPromise] = useState<{ resolve: (value: string | undefined) => void } | null>(null); // TODO understand this
+  const [promise, setPromise] = useState<{ resolve: (value: string | undefined) => void } | null>(null); // NOTE understand this
   // Why use useRef? 
   // If using useState, dialog will refresh and flash when the value is changed.
-  // TODO Why use useState will cause flash?
+  // NOTE Why use useState will cause flash:
+  // Because useState will refresh the component when the value is changed.
   const selectValue = useRef<string>();
 
   const confirm = () => new Promise((resolve, reject) => {

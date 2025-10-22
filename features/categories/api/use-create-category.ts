@@ -29,6 +29,7 @@ export const useCreateCategory = () => {
       // invalidate 作废，让 key 是 categories 的请求结果作废，因为我们已经更新 categories.
       // queryKey "categories" 的来源是 use-get-categories.ts 中的 queryKey
       queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["summary"] });
     },
     onError: () => {
       toast.error("Failed to create category")
