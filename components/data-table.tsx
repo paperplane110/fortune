@@ -25,6 +25,7 @@ import {
 import { useConfirm } from "@/hooks/use-confirm"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Skeleton } from "@/components/ui/skeleton"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -162,6 +163,46 @@ export function DataTable<TData, TValue>({
         >
           Next
         </Button>
+      </div>
+    </div>
+  )
+}
+
+// DataTable.Skeleton 组件
+DataTable.Skeleton = function DataTableSkeleton() {
+  return (
+    <div>
+      <div className="flex items-center py-4">
+        <Skeleton className="h-8 w-48" />
+      </div>
+      <div className="overflow-hidden rounded-md border">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              {[...Array(3)].map((_, i) => (
+                <TableHead key={i}>
+                  <Skeleton className="h-4 w-24" />
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {[...Array(8)].map((_, i) => (
+              <TableRow key={i}>
+                {[...Array(3)].map((_, j) => (
+                  <TableCell key={j}>
+                    <Skeleton className="h-4 w-full" />
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <Skeleton className="h-4 w-48 flex-1" />
+        <Skeleton className="h-8 w-20" />
+        <Skeleton className="h-8 w-20" />
       </div>
     </div>
   )

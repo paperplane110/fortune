@@ -16,6 +16,7 @@ import {
   CardContent,
 } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton";
+import { Suspense } from "react";
 
 const CategoriesPage = () => {
   const newCategory = useNewCategory();
@@ -58,16 +59,18 @@ const CategoriesPage = () => {
           </Button>
         </CardHeader>
         <CardContent>
-          <DataTable
-            filterKey="name"
-            columns={columns}
-            data={categories}
-            onDelete={(rows) => {
-              const ids = rows.map((row) => row.original.id);
-              bulkDeleteCategory.mutate({ ids });
-            }}
-            disabled={isDisabled}
-          />
+          <Suspense fallback={<DataTable.Skeleton />}>
+            <DataTable
+              filterKey="name"
+              columns={columns}
+              data={categories}
+              onDelete={(rows) => {
+                const ids = rows.map((row) => row.original.id);
+                bulkDeleteCategory.mutate({ ids });
+              }}
+              disabled={isDisabled}
+            />
+          </Suspense>
         </CardContent>
       </Card>
     </div>
