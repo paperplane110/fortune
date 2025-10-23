@@ -6,10 +6,10 @@ import { useNewTransaction } from "@/features/transactions/hooks/use-new-transac
 import { TransactionForm } from "@/features/transactions/components/transaction-form";
 
 import { useGetCategories } from "@/features/categories/api/use-get-categories";
-import { useCreateCategory } from "@/features/categories/api/use-create-category";
+import { useCreateCategory, ResponseType as CreateCategoryRespType } from "@/features/categories/api/use-create-category";
 
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
-import { useCreateAccount } from "@/features/accounts/api/use-create-account";
+import { useCreateAccount, ResponseType as CreateAccountRespType } from "@/features/accounts/api/use-create-account";
 
 import { insertTransactionSchema } from "@/db/schema";
 import {
@@ -33,7 +33,8 @@ export const NewTransactionSheet = () => {
 
   const categoryQuery = useGetCategories();
   const categoryMutation = useCreateCategory()
-  const onCreateCategory = (name: string) => categoryMutation.mutate({ name });
+  // NOTE 这里为 onSuccess 留出了开口，可以让调用方在创建成功后做一些额外的操作，比如为表单赋予新创建的值
+  const onCreateCategory = (name: string, onSuccess?: (category: CreateCategoryRespType) => void) => categoryMutation.mutate({ name }, { onSuccess });
   const categoryOptions = (categoryQuery.data ?? []).map((category) => ({
     label: category.name,
     value: category.id,
@@ -41,7 +42,8 @@ export const NewTransactionSheet = () => {
 
   const accountQuery = useGetAccounts();
   const accountMutation = useCreateAccount();
-  const onCreateAccount = (name: string) => accountMutation.mutate({ name });
+  // NOTE 这里为 onSuccess 留出了开口，可以让调用方在创建成功后做一些额外的操作，比如为表单赋予新创建的值
+  const onCreateAccount = (name: string, onSuccess?: (account: CreateAccountRespType) => void) => accountMutation.mutate({ name }, { onSuccess });
   const accountOptions = (accountQuery.data ?? []).map((account) => ({
     label: account.name,
     value: account.id,

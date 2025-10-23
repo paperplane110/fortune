@@ -18,6 +18,8 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { convertAmountToMiliunits } from "@/lib/utils";
+import { ResponseType as CreateCategoryRespType } from "@/features/categories/api/use-create-category";
+import { ResponseType as CreateAccountRespType } from "@/features/accounts/api/use-create-account";
 
 // 定义表单的 schema
 // 这里的 schema 是 ZodObject 对象的一个实例，而非类型
@@ -50,9 +52,9 @@ type Props = {
   onDelete?: () => void;
   disabled?: boolean;
   categoryOptions: { label: string; value: string }[];
-  onCreateCategory: (name: string) => void;
+  onCreateCategory: (name: string, onSuccess?: (category: CreateCategoryRespType) => void) => void;
   accountOptions: { label: string; value: string }[];
-  onCreateAccount: (name: string) => void;
+  onCreateAccount: (name: string, onSuccess?: (account: CreateAccountRespType) => void) => void;
 }
 
 export const TransactionForm = ({
@@ -120,7 +122,14 @@ export const TransactionForm = ({
                 <Select
                   placeholder="Select account"
                   options={accountOptions}
-                  onCreate={onCreateAccount}
+                  onCreate={(name: string) => {
+                    // 创建成功后获取 accountId 并设置到表单中
+                    onCreateAccount(name, (account) => {
+                      if ("data" in account) {
+                        form.setValue("accountId", account.data.id);
+                      }
+                    });
+                  }}
                   value={field.value}
                   onChange={field.onChange}
                   disabled={disabled}
@@ -139,7 +148,13 @@ export const TransactionForm = ({
                 <Select
                   placeholder="Select category"
                   options={categoryOptions}
-                  onCreate={onCreateCategory}
+                  onCreate={(name: string) => {
+                    onCreateCategory(name, (category) => {
+                      if ("data" in category) {
+                        form.setValue("categoryId", category.data.id);
+                      }
+                    });
+                  }}
                   value={field.value}
                   onChange={field.onChange}
                   disabled={disabled}
@@ -172,7 +187,7 @@ export const TransactionForm = ({
               <FormLabel>Amount</FormLabel>
               <FormControl>
                 <AmountInput 
-                  // 这里不是 {...field}
+                  // NOTE 这里不是 {...field}
                   // 当在 FormField 中使用 {...field} 时，React Hook Form 会传递一个 ref 给组件，用于表单验证和焦点管理。
                   // 函数组件不能直接接收 ref ：普通的函数组件不能直接接收 ref 属性，需要使用 React.forwardRef() 来包装。
                   // 或者直接明确向 AmountInput 组件传递的属性。

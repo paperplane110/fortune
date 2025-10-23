@@ -27,7 +27,6 @@ export const Select = ({
   const onSelect = (
     option: SingleValue<{ label: string, value: string }>
   ) => {
-    console.log('onSelect', option)
     onChange(option?.value)
   }
 
@@ -40,7 +39,6 @@ export const Select = ({
     setIsLoading(true);
     if (onCreate) {
       onCreate(newValue)
-      onChange(newValue)
     }
     setIsLoading(false);
   }
