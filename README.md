@@ -1,41 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fortune：云端记账平台
 
-## Getting Started
+一款通过 web 能够随时访问的记账软件
 
-First, run the development server:
+> 参考教程：https://www.youtube.com/watch?v=N_uNKAus0II
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+环境: 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- nodejs 20
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+技术栈: 
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 框架：Nextjs
+- 数据库：Neon+PostgreSQL
+- 后端：Honojs
+- 前端：React+Typescript+Tailwindcss
+- 基础组件：Shadcn ui
+- 图表组件：Recharts
+- 鉴权：clerk
+- 部署：Vercel
 
-## Learn More
+学习笔记：https://ge3eaqdqso.feishu.cn/docx/ZTH5duQgioXCGuxop25cvIPbnie
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## Notes
-
-- logo: https://logoipsum.com/
-- clerk UserBotton's property `afterSignOutUrl` has been move to `<ClerkProvider/>`: https://clerk.com/docs/components/user/user-button
